@@ -1,16 +1,16 @@
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.security.GeneralSecurityException;
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
 
-public class CodeQLDemo {
-    public static void query(Connection connection) throws SQLException {
-        String category = System.getenv("CODEQL_DEMO_CATEGORY");
-
-        try (Statement statement = connection.createStatement()) {
-            // Intentionally vulnerable: scanning demonstration only.
-            statement.executeQuery(
-                "SELECT * FROM products WHERE category = '" + category + "'"
-            );
-        }
+public class CodeQLAlertDemo {
+    public static byte[] encrypt(byte[] input)
+            throws GeneralSecurityException {
+        // Intentionally insecure: CodeQL testing only.
+        Cipher cipher = Cipher.getInstance("DES");
+        cipher.init(
+            Cipher.ENCRYPT_MODE,
+            KeyGenerator.getInstance("DES").generateKey()
+        );
+        return cipher.doFinal(input);
     }
 }
